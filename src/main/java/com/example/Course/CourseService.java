@@ -2,12 +2,16 @@ package com.example.Course;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class CourseService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CourseService.class);
 
     @Autowired
     private CourseRepository courseRepository;
@@ -21,7 +25,7 @@ public class CourseService {
         try{
             course = courseRepository.findById(courseId).orElse(null);
         }catch (Exception ex){
-            System.out.println(ex);
+            LOGGER.error("Error occurred while fetching course by Id : {}",ex.getMessage());
         }
         return course;
     }
@@ -31,7 +35,7 @@ public class CourseService {
             courseRepository.save(course);
         }
         catch (Exception ex){
-            System.out.println(ex);
+            LOGGER.error("Error occurred while adding course : {}",ex.getMessage());
         }
     }
 
